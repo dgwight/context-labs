@@ -6,6 +6,8 @@
 .cache
 dist
 
+coverage
+
 # Node dependencies
 node_modules
 
