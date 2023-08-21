@@ -3,6 +3,7 @@ import _ from "lodash";
 
 export default {
   props: {
+    // the clients list is used to give dynamic options for the filters
     clients: {
       type: Array,
       default: () => [],

@@ -17,13 +17,20 @@
 - I assumed that the <sup>TM<sup> in the name should be sanitized and rendered as html
 - I assumed that multiple values could be selected for a filter
 - The selectable values are dynamic based on the values that exist on clients
+- I considered having a separate page / url for the client detail, but decided that there would be too much unused
+  space on desktop
+
+## State Management
+The app is small enough that I didn't use pinia and instead had the components send their data updates up to index.vue with
+$emit.
 
 ## Testing
 
 Many more tests could be added, but I would want to make sure this was needing before spending the time on it. I made
 sure that components rendered with the correct props, and did a test of $emit being sent from the ClientList component
-as an example
+as an example.
 
 To run tests
 
 `npm run test`
+
