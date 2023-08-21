@@ -16,6 +16,7 @@ export default {
       showFilters: null,
       search: "",
       selectedClient: null,
+      showDetails: false,
     };
   },
   computed: {
@@ -41,6 +42,11 @@ export default {
       });
     },
   },
+  watch: {
+    selectedClient() {
+      this.showDetails = !!this.selectedClient;
+    },
+  },
   created() {
     this.getPosts();
   },
@@ -55,6 +61,11 @@ export default {
 <template>
   <v-app>
     <v-layout>
+      <app-header
+          v-model:search="search"
+          @toggle-filters="showFilters = !showFilters"
+      />
+
       <v-navigation-drawer v-model="showFilters" class="py-4">
         <filters-sidebar
           v-model:titles="titles"
@@ -63,17 +74,22 @@ export default {
           :clients="clients"
         />
       </v-navigation-drawer>
-      <app-header
-        v-model:search="search"
-        @toggle-filters="showFilters = !showFilters"
-      />
+
       <v-main>
         <client-list
           :clients="filteredClients"
           @select-client="(client) => (selectedClient = client)"
         />
       </v-main>
-      <client-details :client="selectedClient" />
+      <v-navigation-drawer
+        v-model="showDetails"
+        class="py-4 px-4"
+        location="right"
+        width="400"
+        permanent
+      >
+        <client-details v-model:client="selectedClient" />
+      </v-navigation-drawer>
     </v-layout>
   </v-app>
 </template>
