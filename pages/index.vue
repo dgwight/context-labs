@@ -20,6 +20,7 @@ export default {
     };
   },
   computed: {
+    // Uses the values from the filters sidebar and top searchbar to filter the client list
     filteredClients() {
       return _.filter(this.clients, (c) => {
         const matchesName = this.search.length
