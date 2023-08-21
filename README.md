@@ -6,6 +6,7 @@
 - Vuetify
 - Uses simple api with route server/api/clients.js to return the data
 - Vitest testing
+- eslint
 
 ## Design
 
@@ -15,9 +16,14 @@
   clients that have incomplete data
 - I assumed that the <sup>TM<sup> in the name should be sanitized and rendered as html
 - I assumed that multiple values could be selected for a filter
+- The selectable values are dynamic based on the values that exist on clients
 
 ## Testing
 
 Many more tests could be added, but I would want to make sure this was needing before spending the time on it. I made
 sure that components rendered with the correct props, and did a test of $emit being sent from the ClientList component
 as an example
+
+To run tests
+
+`npm run test`
