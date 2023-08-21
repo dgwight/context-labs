@@ -7,6 +7,9 @@ export default defineConfig({
   plugins: [vue()],
   test: {
     globals: true,
+    coverage: {
+      provider: 'istanbul'
+    },
     environment: "jsdom",
   },
 });

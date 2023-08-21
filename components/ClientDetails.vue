@@ -12,15 +12,18 @@ export default {
 
 <template>
   <div v-if="client">
-    <v-btn @click="$emit('update:client', null)" icon="mdi-close" class="float-right"></v-btn>
-    <br>
+    <v-btn
+      icon="mdi-close"
+      class="float-right"
+      @click="$emit('update:client', null)"
+    ></v-btn>
 
     <v-avatar :image="client.avatar" size="128"></v-avatar>
     <br />
     <h2>
       <sanitized-html :html="client.name" />
     </h2>
-    <p class="">{{ client.title }}</p>
+    <p class="client-title">{{ client.title }}</p>
     <p v-if="client.nationality" class="mt-2">
       <v-icon icon="mdi-earth" size="sm" class="mb-1"></v-icon>
       {{ client.nationality }}

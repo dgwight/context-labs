@@ -62,8 +62,8 @@ export default {
   <v-app>
     <v-layout>
       <app-header
-          v-model:search="search"
-          @toggle-filters="showFilters = !showFilters"
+        v-model:search="search"
+        @toggle-filters="showFilters = !showFilters"
       />
 
       <v-navigation-drawer v-model="showFilters" class="py-4">
