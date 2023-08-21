@@ -1,25 +1,24 @@
 // plugins/vuetify.js
-import '@mdi/font/css/materialdesignicons.css'
+import "@mdi/font/css/materialdesignicons.css";
 
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
+import { aliases, mdi } from "vuetify/iconsets/mdi";
 
-
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
     ssr: true,
     components,
     directives,
     icons: {
-      defaultSet: 'mdi',
+      defaultSet: "mdi",
       aliases,
       sets: {
-        mdi
-      }
-    }
-  })
+        mdi,
+      },
+    },
+  });
 
-  nuxtApp.vueApp.use(vuetify)
-})
+  nuxtApp.vueApp.use(vuetify);
+});
