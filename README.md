@@ -30,7 +30,21 @@ Many more tests could be added, but I would want to make sure this was needing b
 sure that components rendered with the correct props, and did a test of $emit being sent from the ClientList component
 as an example.
 
+
+To run app locally
+
+`npm run dev`
+
+To run linter
+
+`npm run lint` or `npm run lintfix`
+
 To run tests
 
 `npm run test`
+
+To run tests coverage
+
+`npm run coverage`
+
 
