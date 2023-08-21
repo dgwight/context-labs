@@ -43,7 +43,7 @@ To run tests
 
 `npm run test`
 
-To run tests coverage
+To run test coverage
 
 `npm run coverage`
 
