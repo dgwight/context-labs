@@ -1,8 +1,10 @@
 <script>
   import { filter, includes, uniq, has } from 'lodash'
   import sanitizeHtml from 'sanitize-html'
+  import ClientDetails from '../components/ClientDetails.vue'
 
   export default {
+    components: { ClientDetails },
     data () {
       return {
         clients: [],
@@ -12,7 +14,7 @@
         quotes: [],
         drawer: null,
         search: '',
-        selectedClient: false
+        selectedClient: null
       }
     },
     computed: {
@@ -128,15 +130,7 @@
           </v-list>
         </v-card>
       </v-main>
-
-      <v-navigation-drawer v-model="selectedClient" class="py-4 px-4" location="right" width="300">
-        <v-avatar :image="selectedClient.avatar" size="128"></v-avatar>
-        <br>
-        <h1 v-html="sanitize(selectedClient.name)"></h1>
-        <h3>{{ selectedClient.title }}</h3>
-        <p>{{ selectedClient.nationality }}</p>
-        <p>{{ selectedClient.quote }}</p>
-      </v-navigation-drawer>
+      <client-details :client="selectedClient"/>
     </v-layout>
   </v-app>
 </template>
