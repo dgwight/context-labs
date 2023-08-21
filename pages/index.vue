@@ -1,18 +1,19 @@
 <script>
-  import { filter, includes, uniq, has } from 'lodash'
-  import sanitizeHtml from 'sanitize-html'
+  import { filter, includes, has } from 'lodash'
   import ClientDetails from '../components/ClientDetails.vue'
+  import ClientList from '../components/ClientList.vue'
+  import FiltersSidebar from '../components/FiltersSidebar.vue'
+  import AppHeader from '../components/AppHeader.vue'
 
   export default {
-    components: { ClientDetails },
+    components: { AppHeader, FiltersSidebar, ClientList, ClientDetails },
     data () {
       return {
         clients: [],
-        keys: ['Name', 'Title', 'Quote', 'Nationality'],
         nationalities: [],
         titles: [],
         quotes: [],
-        drawer: null,
+        showFilters: null,
         search: '',
         selectedClient: null
       }
@@ -34,15 +35,6 @@
             : true
           return matchesName && matchesNationality && matchesTitle && matchesQuote
         })
-      },
-      nationalityOptions () {
-        return uniq(this.clients.map((c) => c.nationality || 'Undefined')).sort()
-      },
-      titleOptions () {
-        return uniq(this.clients.map((c) => c.title || 'Undefined')).sort()
-      },
-      quoteOptions () {
-        return uniq(this.clients.map((c) => c.quote || 'Undefined')).sort()
       }
     },
     created () {
@@ -51,9 +43,6 @@
     methods: {
       async getPosts () {
         this.clients = await $fetch('/api/clients')
-      },
-      sanitize (html) {
-        return sanitizeHtml(html)
       }
     }
   }
@@ -62,73 +51,16 @@
 <template>
   <v-app>
     <v-layout>
-      <v-navigation-drawer v-model="drawer" class="py-4">
-        <v-combobox
-            label="Title"
-            :items="titleOptions"
-            v-model="titles"
-            class="mx-4"
-            multiple
-            clearable
-        ></v-combobox>
-
-        <v-combobox
-            label="Nationality"
-            :items="nationalityOptions"
-            v-model="nationalities"
-            class="mx-4"
-            multiple
-            clearable
-            chips
-        ></v-combobox>
-
-        <v-combobox
-            label="Quote"
-            :items="quoteOptions"
-            v-model="quotes"
-            class="mx-4"
-            multiple
-            clearable
-        ></v-combobox>
+      <v-navigation-drawer v-model="showFilters" class="py-4">
+        <filters-sidebar
+            :clients="clients"
+            v-model:titles="titles"
+            v-model:nationalities="nationalities"
+            v-model:quotes="quotes"/>
       </v-navigation-drawer>
-
-      <v-app-bar color="blue" :elevation="0">
-        <v-text-field
-            hide-details
-            placeholder="Search clients"
-            prepend-inner-icon="mdi-magnify"
-            variant="solo"
-            class="ml-4 mr-1"
-            clearable
-            density="compact"
-            v-model="search"
-            style="max-width: 400px;"
-        ></v-text-field>
-
-        <v-app-bar-nav-icon
-            variant="text"
-            icon="mdi-filter"
-            @click.stop="drawer = !drawer"
-        ></v-app-bar-nav-icon>
-      </v-app-bar>
-
+      <app-header v-model:search="search" @toggleFilters="showFilters = !showFilters"/>
       <v-main>
-        <v-card class="mx-4 my-4" v-if="filteredClients.length">
-          <v-list lines="two">
-            <v-list-item
-                v-for="(client, i) in filteredClients"
-                :key="i"
-                :value="client"
-                :prepend-avatar="client.avatar"
-                @click="selectedClient = client"
-            >
-              <v-list-item-title v-html="sanitize(client.name)"></v-list-item-title>
-              <v-list-item-subtitle>
-                {{ client.title }}
-              </v-list-item-subtitle>
-            </v-list-item>
-          </v-list>
-        </v-card>
+        <client-list :clients="filteredClients" @selectClient="(client) => selectedClient = client"/>
       </v-main>
       <client-details :client="selectedClient"/>
     </v-layout>
