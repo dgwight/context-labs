@@ -19,9 +19,13 @@
 - The selectable values are dynamic based on the values that exist on clients
 - I considered having a separate page / url for the client detail, but decided that there would be too much unused
   space on desktop
+- I assumed that all the filtering / search should be done on the frontend, though some of this would occur on the
+  backend in a real app
 
 ## State Management
-The app is small enough that I didn't use pinia and instead had the components send their data updates up to index.vue with
+
+The app is small enough that I didn't use pinia and instead had the components send their data updates up to index.vue
+with
 $emit.
 
 ## Testing
@@ -29,7 +33,6 @@ $emit.
 Many more tests could be added, but I would want to make sure this was needing before spending the time on it. I made
 sure that components rendered with the correct props, and did a test of $emit being sent from the ClientList component
 as an example.
-
 
 To run app locally
 
