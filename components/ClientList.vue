@@ -1,35 +1,28 @@
 <script>
-  import sanitizeHtml from 'sanitize-html'
-
-  export default {
-    props: {
-      clients: {
-        type: Array,
-        default: () => []
-      },
-      client: {
-        type: Object,
-        default: null
-      }
+export default {
+  props: {
+    clients: {
+      type: Array,
+      default: () => [],
     },
-    methods: {
-      sanitize (html) {
-        return sanitizeHtml(html)
-      }
-    }
-  }
+  },
+  emits: ["selectClient"],
+};
 </script>
 
 <template>
-  <v-card class="mx-4 my-4" v-if="clients.length">
+  <v-card v-if="clients.length" class="mx-4 my-4">
     <v-list lines="two">
       <v-list-item
-          v-for="(client, i) in clients"
-          :key="i"
-          :value="client"
-          :prepend-avatar="client.avatar"
-          @click="$emit('selectClient', client)">
-        <v-list-item-title v-html="sanitize(client.name)"></v-list-item-title>
+        v-for="(client, i) in clients"
+        :key="i"
+        :value="client"
+        :prepend-avatar="client.avatar"
+        @click="$emit('selectClient', client)"
+      >
+        <v-list-item-title>
+          <sanitized-html :html="client.name" />
+        </v-list-item-title>
         <v-list-item-subtitle>
           {{ client.title }}
         </v-list-item-subtitle>
