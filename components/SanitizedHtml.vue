@@ -10,6 +10,7 @@ export default {
   },
   computed: {
     sanitizedHtml() {
+      // protects against XSS attacks
       return sanitizeHtml(this.html);
     },
   },
