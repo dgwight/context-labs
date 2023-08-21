@@ -9,14 +9,14 @@ export default {
   components: { AppHeader, FiltersSidebar, ClientList, ClientDetails },
   data() {
     return {
-      clients: [],
-      nationalities: [],
-      titles: [],
-      quotes: [],
+      clients: [], // All clients loaded from backend
+      nationalities: [], // Selected nationalities to filter for
+      titles: [],  // Selected titles to filter for
+      quotes: [], // Selected quote to filter for
+      search: "", // Name search
       showFilters: null,
-      search: "",
-      selectedClient: null,
       showDetails: false,
+      selectedClient: null,
     };
   },
   computed: {
