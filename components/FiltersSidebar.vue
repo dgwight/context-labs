@@ -9,15 +9,20 @@ export default {
     },
   },
   emits: ["update:titles", "update:nationalities", "update:quotes"],
+  methods: {
+    optionsForProperty(property) {
+      return _.uniq(this.clients.map((c) => c[property] || "Undefined")).sort();
+    }
+  },
   computed: {
     nationalityOptions() {
-      return _.uniq(this.clients.map((c) => c.nationality || "Undefined")).sort();
+      return this.optionsForProperty('nationality');
     },
     titleOptions() {
-      return _.uniq(this.clients.map((c) => c.title || "Undefined")).sort();
+      return this.optionsForProperty('title');
     },
     quoteOptions() {
-      return _.uniq(this.clients.map((c) => c.quote || "Undefined")).sort();
+      return this.optionsForProperty('quote');
     },
   },
 };
