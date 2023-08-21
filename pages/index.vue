@@ -9,12 +9,16 @@
         nationalities: [],
         titles: [],
         quotes: [],
-        drawer: true
+        drawer: true,
+        search: ''
       }
     },
     computed: {
       filteredClients () {
         return filter(this.clients, (c) => {
+          const matchesName = this.search.length
+            ? includes(c.name.toLowerCase(), this.search.toLowerCase())
+            : true
           const matchesTitle = this.titles.length
             ? includes(this.titles, c.title)
             : true
@@ -24,7 +28,7 @@
           const matchesQuote= this.quotes.length
             ? includes(this.quotes, c.quote)
             : true
-          return matchesNationality && matchesTitle && matchesQuote
+          return matchesName && matchesNationality && matchesTitle && matchesQuote
         })
       },
       nationalityOptions () {
@@ -52,13 +56,24 @@
   <v-app>
     <v-layout class="rounded rounded-md">
       <v-app-bar color="primary">
+
+
+        <v-text-field
+            hide-details
+            placeholder="Search clients"
+            prepend-inner-icon="mdi-magnify"
+            variant="solo"
+            single-line
+            class="ml-2"
+            v-model="search"
+        ></v-text-field>
+        <v-spacer/>
+
         <v-app-bar-nav-icon
             variant="text"
             icon="mdi-filter"
             @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-
-        <v-toolbar-title>Clients</v-toolbar-title>
       </v-app-bar>
 
       <v-navigation-drawer v-model="drawer" class="py-4">
@@ -93,7 +108,7 @@
       </v-navigation-drawer>
 
       <v-main>
-        <v-card class="mx-4 my-4">
+        <v-card class="mx-4 my-4" v-if="filteredClients.length">
           <v-list lines="two">
             <v-list-item
                 v-for="(client, i) in filteredClients"
