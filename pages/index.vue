@@ -1,5 +1,6 @@
 <script>
   import { filter, includes, uniq } from 'lodash'
+  import sanitizeHtml from 'sanitize-html'
 
   export default {
     data () {
@@ -9,8 +10,9 @@
         nationalities: [],
         titles: [],
         quotes: [],
-        drawer: true,
-        search: ''
+        drawer: null,
+        search: '',
+        selectedClient: false
       }
     },
     computed: {
@@ -25,7 +27,7 @@
           const matchesNationality = this.nationalities.length
             ? includes(this.nationalities, c.nationality)
             : true
-          const matchesQuote= this.quotes.length
+          const matchesQuote = this.quotes.length
             ? includes(this.quotes, c.quote)
             : true
           return matchesName && matchesNationality && matchesTitle && matchesQuote
@@ -47,6 +49,9 @@
     methods: {
       async getPosts () {
         this.clients = await $fetch('/api/clients')
+      },
+      sanitize (html) {
+        return sanitizeHtml(html)
       }
     }
   }
@@ -54,30 +59,8 @@
 
 <template>
   <v-app>
-    <v-layout class="rounded rounded-md">
-      <v-app-bar color="primary">
-
-
-        <v-text-field
-            hide-details
-            placeholder="Search clients"
-            prepend-inner-icon="mdi-magnify"
-            variant="solo"
-            single-line
-            class="ml-2"
-            v-model="search"
-        ></v-text-field>
-        <v-spacer/>
-
-        <v-app-bar-nav-icon
-            variant="text"
-            icon="mdi-filter"
-            @click.stop="drawer = !drawer"
-        ></v-app-bar-nav-icon>
-      </v-app-bar>
-
+    <v-layout>
       <v-navigation-drawer v-model="drawer" class="py-4">
-
         <v-combobox
             label="Title"
             :items="titleOptions"
@@ -107,21 +90,53 @@
         ></v-combobox>
       </v-navigation-drawer>
 
+      <v-app-bar color="blue" :elevation="0">
+        <v-text-field
+            hide-details
+            placeholder="Search clients"
+            prepend-inner-icon="mdi-magnify"
+            variant="solo"
+            class="ml-4 mr-1"
+            clearable
+            density="compact"
+            v-model="search"
+            style="max-width: 400px;"
+        ></v-text-field>
+
+        <v-app-bar-nav-icon
+            variant="text"
+            icon="mdi-filter"
+            @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
+      </v-app-bar>
+
       <v-main>
         <v-card class="mx-4 my-4" v-if="filteredClients.length">
           <v-list lines="two">
             <v-list-item
                 v-for="(client, i) in filteredClients"
                 :key="i"
-                :title="client.name"
                 :value="client"
-                :subtitle="client.title"
                 :prepend-avatar="client.avatar"
+                @click="selectedClient = client"
             >
+              <v-list-item-title v-html="sanitize(client.name)"></v-list-item-title>
+              <v-list-item-subtitle>
+                {{ client.title }}
+              </v-list-item-subtitle>
             </v-list-item>
           </v-list>
         </v-card>
       </v-main>
+
+      <v-navigation-drawer v-model="selectedClient" class="py-4 px-4" location="right" width="300">
+        <v-avatar :image="selectedClient.avatar" size="128"></v-avatar>
+        <br>
+        <h1 v-html="sanitize(selectedClient.name)"></h1>
+        <h3>{{ selectedClient.title }}</h3>
+        <p>{{ selectedClient.nationality }}</p>
+        <p>{{ selectedClient.quote }}</p>
+      </v-navigation-drawer>
     </v-layout>
   </v-app>
 </template>
