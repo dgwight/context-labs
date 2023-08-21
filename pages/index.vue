@@ -1,5 +1,5 @@
 <script>
-  import { filter, includes, uniq } from 'lodash'
+  import { filter, includes, uniq, has } from 'lodash'
   import sanitizeHtml from 'sanitize-html'
 
   export default {
@@ -25,22 +25,22 @@
             ? includes(this.titles, c.title)
             : true
           const matchesNationality = this.nationalities.length
-            ? includes(this.nationalities, c.nationality)
+            ? includes(this.nationalities, c.nationality) || ('Undefined' && !has(c, 'nationality'))
             : true
           const matchesQuote = this.quotes.length
-            ? includes(this.quotes, c.quote)
+            ? includes(this.quotes, c.quote) || ('Undefined' && !has(c, 'nationality'))
             : true
           return matchesName && matchesNationality && matchesTitle && matchesQuote
         })
       },
       nationalityOptions () {
-        return uniq(this.clients.map((c) => c.nationality)).sort()
+        return uniq(this.clients.map((c) => c.nationality || 'Undefined')).sort()
       },
       titleOptions () {
-        return uniq(this.clients.map((c) => c.title)).sort()
+        return uniq(this.clients.map((c) => c.title || 'Undefined')).sort()
       },
       quoteOptions () {
-        return uniq(this.clients.map((c) => c.quote)).sort()
+        return uniq(this.clients.map((c) => c.quote || 'Undefined')).sort()
       }
     },
     created () {
