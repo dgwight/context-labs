@@ -45,7 +45,6 @@ export default {
       class="mx-4"
       multiple
       clearable
-      chips
       @update:model-value="$emit('update:nationalities', $event)"
     ></v-combobox>
 
