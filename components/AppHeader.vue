@@ -13,8 +13,9 @@ export default {
       variant="solo"
       class="ml-4 mr-1 search-bar"
       density="compact"
-      clearable
+      @click:clear="$emit('update:search', '')"
       @update:model-value="$emit('update:search', $event)"
+      clearable
     ></v-text-field>
 
     <v-app-bar-nav-icon
