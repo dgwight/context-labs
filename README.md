@@ -17,4 +17,7 @@
 - I assumed that multiple values could be selected for a filter
 
 ## Testing
-Many more tests could be added, but I would want to make sure this was needing before spending the time on it
+
+Many more tests could be added, but I would want to make sure this was needing before spending the time on it. I made
+sure that components rendered with the correct props, and did a test of $emit being sent from the ClientList component
+as an example
