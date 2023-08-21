@@ -1,5 +1,5 @@
 <script>
-import { uniq } from "lodash";
+import _ from "lodash";
 
 export default {
   props: {
@@ -11,13 +11,13 @@ export default {
   emits: ["update:titles", "update:nationalities", "update:quotes"],
   computed: {
     nationalityOptions() {
-      return uniq(this.clients.map((c) => c.nationality || "Undefined")).sort();
+      return _.uniq(this.clients.map((c) => c.nationality || "Undefined")).sort();
     },
     titleOptions() {
-      return uniq(this.clients.map((c) => c.title || "Undefined")).sort();
+      return _.uniq(this.clients.map((c) => c.title || "Undefined")).sort();
     },
     quoteOptions() {
-      return uniq(this.clients.map((c) => c.quote || "Undefined")).sort();
+      return _.uniq(this.clients.map((c) => c.quote || "Undefined")).sort();
     },
   },
 };

@@ -1,5 +1,5 @@
 <script>
-import { filter, includes, has } from "lodash";
+import _ from "lodash";
 import ClientDetails from "../components/ClientDetails.vue";
 import ClientList from "../components/ClientList.vue";
 import FiltersSidebar from "../components/FiltersSidebar.vue";
@@ -21,20 +21,20 @@ export default {
   },
   computed: {
     filteredClients() {
-      return filter(this.clients, (c) => {
+      return _.filter(this.clients, (c) => {
         const matchesName = this.search.length
-          ? includes(c.name.toLowerCase(), this.search.toLowerCase())
+          ? _.includes(c.name.toLowerCase(), this.search.toLowerCase())
           : true;
         const matchesTitle = this.titles.length
-          ? includes(this.titles, c.title)
+          ? _.includes(this.titles, c.title)
           : true;
         const matchesNationality = this.nationalities.length
-          ? includes(this.nationalities, c.nationality) ||
-            ("Undefined" && !has(c, "nationality"))
+          ? _.includes(this.nationalities, c.nationality) ||
+            ("Undefined" && !_.has(c, "nationality"))
           : true;
         const matchesQuote = this.quotes.length
-          ? includes(this.quotes, c.quote) ||
-            ("Undefined" && !has(c, "nationality"))
+          ? _.includes(this.quotes, c.quote) ||
+            ("Undefined" && !_.has(c, "nationality"))
           : true;
         return (
           matchesName && matchesNationality && matchesTitle && matchesQuote
