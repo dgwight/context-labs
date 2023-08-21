@@ -7,14 +7,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    client: {
-      type: Object,
-      default: null,
-    },
-    showFilters: {
-      type: Boolean,
-      default: null,
-    },
   },
   emits: ["update:titles", "update:nationalities", "update:quotes"],
   computed: {
