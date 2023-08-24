@@ -37,6 +37,7 @@ export default {
       class="mx-4"
       multiple
       clearable
+      @click:clear="$emit('update:titles', [])"
       @update:model-value="$emit('update:titles', $event)"
     ></v-combobox>
 
@@ -46,6 +47,7 @@ export default {
       class="mx-4"
       multiple
       clearable
+      @click:clear="$emit('update:nationalities', [])"
       @update:model-value="$emit('update:nationalities', $event)"
     ></v-combobox>
 
@@ -55,6 +57,7 @@ export default {
       class="mx-4"
       multiple
       clearable
+      @click:clear="$emit('update:quotes', [])"
       @update:model-value="$emit('update:quotes', $event)"
     ></v-combobox>
   </div>
